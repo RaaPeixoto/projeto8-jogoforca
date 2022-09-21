@@ -1,7 +1,11 @@
-# Getting Started with Create React App
+<div align="center">
+<img src="/src/assets/images/forca6.png" alt="drawing" width="200" /> 
+<p>Jogo da Forca</p>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+<p align="center">
+<img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
+</p>
 ## Available Scripts
 
 In the project directory, you can run:
