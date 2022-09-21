@@ -53,7 +53,7 @@ export default function App() {
 
   function Letters(props) {
     function selectLetter(l){
-      l.setClass (disabled)
+      setClass (disabled)
 
     } 
    
