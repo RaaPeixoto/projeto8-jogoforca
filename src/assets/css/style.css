@@ -81,6 +81,7 @@
 .disabled{
     color: #79818a;
     background-color: #9faab5;
+    pointer-events: none;
 }
 
 .abled {
@@ -119,4 +120,8 @@
 .incorrect{
   color:red
 }
+.correct{
+  color:green
+}
+  
 
