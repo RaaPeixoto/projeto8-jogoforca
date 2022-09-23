@@ -116,3 +116,7 @@
    cursor: pointer;
 }
 
+.incorrect{
+  color:red
+}
+

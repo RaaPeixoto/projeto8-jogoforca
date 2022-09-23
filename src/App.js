@@ -28,6 +28,7 @@ export default function App() {
   const [classLetter, setClass] = React.useState(disabled); 
   const [incorrectLetters,setIncorrectLetters] =React.useState(0); 
   const hiddenLetter = "_"
+  const [colorWord,setColorWord] =React.useState(""); 
 
 /*   const [wordLetter,setWordLetter] = React.useState(hiddenLetter); */
   const [word,setWord] = React.useState([]);
@@ -35,6 +36,11 @@ export default function App() {
 function incorrectLetter (){
 setIncorrectLetters(incorrectLetters+1)
   console.log(incorrectLetters)
+  if (incorrectLetters >=5){
+    setColorWord ("incorrect")
+    setSelectedLetter(alphabet)
+  }
+  
 }
 
   //FUNÇÃO SELECIONAR LETRA
@@ -74,7 +80,7 @@ function drawWord() {
             {" "}
             Escolher Palavra
           </div>
-          <div className="choosen-word">{word.map((w, index) => <div key={index} letter={w}> {selectedLetter.includes(w)? w : hiddenLetter}</div>)}</div>
+          <div className="choosen-word">{word.map((w, index) => <div key={index} letter={w} className={colorWord}> {selectedLetter.includes(w)? w : hiddenLetter}</div>)}</div>
         </div>
       </div>
     );
