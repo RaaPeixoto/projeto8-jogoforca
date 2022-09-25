@@ -8,7 +8,10 @@ import forca3 from "./assets/images/forca3.png";
 import forca4 from "./assets/images/forca4.png";
 import forca5 from "./assets/images/forca5.png";
 import forca6 from "./assets/images/forca6.png";
-
+import winImg from "./assets/images/giphy.gif"
+import Hangman from "./Hangman";
+import GuessAnswer from "./GuessAnswer.js";
+import Letters from "./Letters";
 export default function App() {
   //imagem da forca
   const hangmanImages = [
@@ -19,6 +22,7 @@ export default function App() {
     forca4,
     forca5,
     forca6,
+    winImg
   ]; // 0 erros posição 0, 1 erro posição 1, etc
 
   const disabled = "letter disabled";
@@ -31,7 +35,19 @@ export default function App() {
   const [guessWordAnswer, setWordGuess] = useState("");
   const [word, setWord] = useState([]);
   const [correctLetters,setCorrectLetters] = useState(0);
-  const [inputIsDisabled,setInputIsDisabled] = useState(true)
+  const [inputIsDisabled,setInputIsDisabled] = useState(true);
+  function win(){
+    setColorWord("correct");
+    setSelectedLetter(alphabet);
+    setInputIsDisabled (true);
+    setIncorrectLetters(7);
+   }
+   function lose(){
+    setColorWord("incorrect");
+    setSelectedLetter(alphabet);
+    setIncorrectLetters(6);
+    setInputIsDisabled (true);
+   }
   function reset() {
     setWordGuess("");
     setColorWord("");
@@ -41,155 +57,51 @@ export default function App() {
     setCorrectLetters(0);
     setInputIsDisabled(false);
   }
-  function incorrectLetter() {
+
+  function replace (string){
+    return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  }
+ /*  function incorrectLetter() {
     setIncorrectLetters(incorrectLetters + 1);
     console.log(incorrectLetters);
-    if (incorrectLetters >= 5) {
-      setColorWord("incorrect");
-      setSelectedLetter(alphabet);
+    if ((incorrectLetters + 1) === 6) {
+      lose()
     }
   }
 
   //FUNÇÃO SELECIONAR LETRA
   function selectLetter(index) {
-    /*  if(!selectedLetter.includes(alphabet[index])&&classLetter!== disabled){ */ // NÃO PRECISA MAIS POIS COLOQUEI NO STYLE  pointer-events: none;
-    const newSelectedLetter = [...selectedLetter, alphabet[index]];
+    let letter = alphabet[index]
+    const newSelectedLetter = [...selectedLetter, letter];
     setSelectedLetter(newSelectedLetter);
     console.log(selectedLetter);
     console.log(word);
-    word.includes(alphabet[index])? console.log("")
-      : incorrectLetter(alphabet[index]);
-    /* } */
-
-  let compareLetter = (word.filter(x => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "") === alphabet[index])).length
-  compareLetter=correctLetters+compareLetter
-  setCorrectLetters(compareLetter)
-  if(compareLetter===word.length){
+   let numberCorrectLetters= word.filter(l=> replace(l)===letter).length;
+   console.log(numberCorrectLetters)
+  numberCorrectLetters>0?console.log("") //filtra a array de word para saber se possui a letra
+  : incorrectLetter(letter);
+ 
+  let newCorrectLetters = correctLetters+numberCorrectLetters
+  setCorrectLetters(newCorrectLetters)
+  if(newCorrectLetters===word.length){
    win()
   }
-  }
+  } */
+
+
+
  
 
-  //FUNÇÃO SORTEAR PALAVRA
-  function drawWord() {
-    reset();
-    setInputIsDisabled(false)
-    let sortWord = words.sort(() => Math.random() - 0.5);
-    let choosenWord = sortWord[0];
-    choosenWord = choosenWord.split("");
-    setClass(abled);
-    setWord(choosenWord);
-  }
-
-  function Forca() {
-    return (
-      <div className="hangman">
-        <img src={hangmanImages[incorrectLetters]} alt="Hangman Game" />
-        <div className="right">
-          <div className="choose-button" onClick={drawWord}>
-          
-            Escolher Palavra
-          </div>
-          <div className="choosen-word">
-            {word.map((w, index) => (
-              <div key={index} className={colorWord}> 
-                {selectedLetter.includes(w.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
-                  ? w
-                  : hiddenLetter}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  function Letters(props) {
-    return (
-      <div
-        className={
-          selectedLetter.includes(alphabet[props.index])
-            ? disabled
-            : classLetter
-        }
-        onClick={() => selectLetter(props.index)}
-      >
-        {" "}
-        {props.letter.toUpperCase()}{" "}
-      </div> // letter vira abled e disabled
-    );
-  }
-
-  function compareWord(compare, arrayWordAnswer) {
-    for (var i = 0; i < word.length; i++) {
-      if (word[i] === arrayWordAnswer[i]) {
-        compare++;
-      } else {
-        lose()
-      }
-    }
-    if (compare === word.length) {
-     win()
-    }
-  }
-  function guessWord() {
-    let arrayWordAnswer = guessWordAnswer.toLowerCase();
-    arrayWordAnswer = arrayWordAnswer.split("");
-    console.log("arrayyyy", arrayWordAnswer);
-    console.log("word", word);
-    let compare = 0;
-    if (word.length === arrayWordAnswer.length) {
-      compareWord(compare, arrayWordAnswer);
-    } else {
-      lose()
-    
-    }
-    setWordGuess("");
-  }
-
- function win(){
-  setColorWord("correct");
-  setSelectedLetter(alphabet);
-  setInputIsDisabled (true);
-  setInputIsDisabled (true);
- }
- function lose(){
-  setColorWord("incorrect");
-  setSelectedLetter(alphabet);
-  setIncorrectLetters(6);
-  setInputIsDisabled (true);
- }
-
-  function GuessAnswer() {
-    return (
-      <div className="guess-answer">
-        <p> Já sei a palavra</p>
-        <input
-        placeholder="Digite a palavra"
-        disabled = {inputIsDisabled}
-          autoFocus
-          onChange={(e) => setWordGuess(e.target.value)}
-          value={guessWordAnswer}
-          onKeyPress={(e) =>
-            e.key === "Enter" ? guessWord(): null
-          }
-        />
-        <div className="guess" onClick={guessWord}>
-          {" "}
-          Chutar{" "}
-        </div>
-      </div>
-    );
-  }
   return (
     <div className="game">
-      <Forca />
+      <Hangman hangmanImages= {hangmanImages} incorrectLetters={incorrectLetters}  word={word} words={words} colorWord={colorWord} selectedLetter={selectedLetter} hiddenLetter={hiddenLetter} replace= {replace} reset={reset} setInputIsDisabled={setInputIsDisabled} setClass={setClass} abled={abled} setWord={setWord}/>
       <div className="letters">
         {alphabet.map((l, index) => (
-          <Letters letter={l} key={index} index={index} />
+          <Letters letter={l} key={index} index={index} selectedLetter={selectedLetter} disabled={disabled} classLetter={classLetter} alphabet={alphabet} incorrectLetters = {incorrectLetters} setIncorrectLetters={setIncorrectLetters} lose={lose} setSelectedLetter={setSelectedLetter} word={word} replace={replace} correctLetters={correctLetters} setCorrectLetters={setCorrectLetters} win={win}/>
         ))}
       </div>
-      <GuessAnswer />
+      <GuessAnswer word= {word} inputIsDisabled= {inputIsDisabled} guessWordAnswer={guessWordAnswer} setWordGuess={setWordGuess} lose={lose} win={win} replace={replace}/>
     </div>
   );
 }
+

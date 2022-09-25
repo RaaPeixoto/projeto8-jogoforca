@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;700;800;900&display=swap');
 * {
     box-sizing: border-box;
   }
@@ -75,6 +76,7 @@
     border-radius: 5px;
     font-size: 20px;
     font-weight: 1000;
+    
     cursor: pointer;
 }
 
@@ -113,7 +115,7 @@
    border: 2px solid #3b74a9;
    border-radius: 5px;
    font-size: 20px;
-   font-weight: 800;
+   font-weight: 900;
    cursor: pointer;
 }
 
