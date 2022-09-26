@@ -12,6 +12,8 @@ import winImg from "./assets/images/giphy.gif"
 import Hangman from "./Hangman";
 import GuessAnswer from "./GuessAnswer.js";
 import Letters from "./Letters";
+import styled from 'styled-components';
+import GlobalStyle from "./GlobalStyle"
 export default function App() {
   //imagem da forca
   const hangmanImages = [
@@ -25,10 +27,10 @@ export default function App() {
     winImg
   ]; // 0 erros posição 0, 1 erro posição 1, etc
 
-  const disabled = "letter disabled";
-  const abled = "letter abled";
+  const disabled = true;
+  const abled = false;
   const [selectedLetter, setSelectedLetter] = useState([]);
-  const [classLetter, setClass] = useState(disabled);
+  const [buttonLetter, setButtonLetter] = useState(disabled);
   const [incorrectLetters, setIncorrectLetters] = useState(0);
   const hiddenLetter = "_";
   const [colorWord, setColorWord] = useState("");
@@ -52,7 +54,7 @@ export default function App() {
     setWordGuess("");
     setColorWord("");
     setIncorrectLetters(0);
-    setClass(disabled);
+    setButtonLetter(disabled);
     setSelectedLetter([]);
     setCorrectLetters(0);
     setInputIsDisabled(false);
@@ -61,47 +63,37 @@ export default function App() {
   function replace (string){
     return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
- /*  function incorrectLetter() {
-    setIncorrectLetters(incorrectLetters + 1);
-    console.log(incorrectLetters);
-    if ((incorrectLetters + 1) === 6) {
-      lose()
-    }
-  }
-
-  //FUNÇÃO SELECIONAR LETRA
-  function selectLetter(index) {
-    let letter = alphabet[index]
-    const newSelectedLetter = [...selectedLetter, letter];
-    setSelectedLetter(newSelectedLetter);
-    console.log(selectedLetter);
-    console.log(word);
-   let numberCorrectLetters= word.filter(l=> replace(l)===letter).length;
-   console.log(numberCorrectLetters)
-  numberCorrectLetters>0?console.log("") //filtra a array de word para saber se possui a letra
-  : incorrectLetter(letter);
- 
-  let newCorrectLetters = correctLetters+numberCorrectLetters
-  setCorrectLetters(newCorrectLetters)
-  if(newCorrectLetters===word.length){
-   win()
-  }
-  } */
-
-
-
  
 
   return (
-    <div className="game">
-      <Hangman hangmanImages= {hangmanImages} incorrectLetters={incorrectLetters}  word={word} words={words} colorWord={colorWord} selectedLetter={selectedLetter} hiddenLetter={hiddenLetter} replace= {replace} reset={reset} setInputIsDisabled={setInputIsDisabled} setClass={setClass} abled={abled} setWord={setWord}/>
-      <div className="letters">
+    <Game>
+      <Hangman hangmanImages= {hangmanImages} incorrectLetters={incorrectLetters}  word={word} words={words} colorWord={colorWord} selectedLetter={selectedLetter} hiddenLetter={hiddenLetter} replace= {replace} reset={reset} setInputIsDisabled={setInputIsDisabled} setButtonLetter={setButtonLetter} abled={abled} setWord={setWord}/>
+      <LettersDiv>
         {alphabet.map((l, index) => (
-          <Letters letter={l} key={index} index={index} selectedLetter={selectedLetter} disabled={disabled} classLetter={classLetter} alphabet={alphabet} incorrectLetters = {incorrectLetters} setIncorrectLetters={setIncorrectLetters} lose={lose} setSelectedLetter={setSelectedLetter} word={word} replace={replace} correctLetters={correctLetters} setCorrectLetters={setCorrectLetters} win={win}/>
+          <Letters letter={l} key={index} index={index} selectedLetter={selectedLetter} buttonLetter={buttonLetter} alphabet={alphabet} incorrectLetters = {incorrectLetters} setIncorrectLetters={setIncorrectLetters} lose={lose} setSelectedLetter={setSelectedLetter} word={word} replace={replace} correctLetters={correctLetters} setCorrectLetters={setCorrectLetters} win={win}/>
         ))}
-      </div>
+      </LettersDiv>
       <GuessAnswer word= {word} inputIsDisabled= {inputIsDisabled} guessWordAnswer={guessWordAnswer} setWordGuess={setWordGuess} lose={lose} win={win} replace={replace}/>
-    </div>
+      <GlobalStyle />
+    </Game>
   );
-}
+        }
+const Game = styled.div`
+  padding: 50px 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+`
+const LettersDiv = styled.div `
+    padding-top: 50px;
+    display: flex;
+    justify-content:center;
+    flex-wrap: wrap;
+    width: 950px;
+`
 

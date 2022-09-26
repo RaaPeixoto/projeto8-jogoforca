@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 export default function GuessAnswer(props) {
     const { word, inputIsDisabled, guessWordAnswer,  setWordGuess, lose, win, replace} = props
 
@@ -30,8 +32,8 @@ export default function GuessAnswer(props) {
     }
   }
     return (
-        <div className="guess-answer">
-            <p> Já sei a palavra</p>
+        <GuessAnswerDiv>
+            <p> Já sei a palavra!</p>
             <input
                 placeholder="Digite a palavra"
                 disabled={inputIsDisabled}
@@ -42,10 +44,39 @@ export default function GuessAnswer(props) {
                     e.key === "Enter" ? guessWord() : null
                 }
             />
-            <div className="guess" onClick={guessWord}>
+            <Guess onClick={guessWord}>
                 {" "}
                 Chutar{" "}
-            </div>
-        </div>
+            </Guess>
+        </GuessAnswerDiv>
     );
 }
+
+const GuessAnswerDiv = styled.div `
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  width: 800px;
+  p{
+    font-size: 20px;
+  }
+  input {
+    height:30px;
+    width: 300px;
+  }
+`
+const Guess = styled.div `
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 30px;
+  color: #3b74a9;
+   background-color: #e1ecf4;
+   border: 2px solid #3b74a9;
+   border-radius: 5px;
+   font-size: 20px;
+   font-weight: 900;
+   cursor: pointer;
+`

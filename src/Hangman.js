@@ -1,6 +1,6 @@
-
+import styled from 'styled-components';
 export default function Hangman(props) {
-  const { hangmanImages, incorrectLetters, word, words, colorWord, selectedLetter, hiddenLetter, replace, reset, setInputIsDisabled, setClass, abled, setWord } = props
+  const { hangmanImages, incorrectLetters, word, words, colorWord, selectedLetter, hiddenLetter, replace, reset, setInputIsDisabled, setButtonLetter, abled, setWord } = props
   //FUNÇÃO SORTEAR PALAVRA
   function drawWord() {
     reset();
@@ -8,27 +8,72 @@ export default function Hangman(props) {
     let sortWord = words.sort(() => Math.random() - 0.5);
     let choosenWord = sortWord[0];
     choosenWord = choosenWord.split("");
-    setClass(abled);
+    setButtonLetter(abled);
     setWord(choosenWord);
   }
   return (
-    <div className="hangman">
+    <HangmanGame>
       <img src={hangmanImages[incorrectLetters]} alt="Hangman Game" />
-      <div className="right">
-        <div className="choose-button" onClick={drawWord}>
+      <WordDiv>
+        <ChooseButton onClick={drawWord}>
 
           Escolher Palavra
-        </div>
-        <div className="choosen-word">
+        </ChooseButton>
+        <ChoosenWord colorWord= {colorWord}>
           {word.map((w, index) => (
-            <div key={index} className={colorWord}>
+            <div key={index} >
               {selectedLetter.includes(replace(w))
                 ? w
                 : hiddenLetter}
             </div>
           ))}
-        </div>
-      </div>
-    </div>
+        </ChoosenWord>
+      </WordDiv>
+    </HangmanGame>
   );
 }
+
+const HangmanGame = styled.div`
+  display: flex;
+  width: 900px;
+  img{
+    margin-top:10px;
+    width: 400px;
+    height:fit-content;
+  }
+`
+
+const WordDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width:50%;
+`
+
+const ChooseButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #28ae60;
+  color: #ffffff;
+  width: 200px;
+  height: 50px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 50px;
+  cursor: pointer;
+  
+`
+
+
+const ChoosenWord= styled.div `
+  display: flex;
+  margin-top: 400px;
+  div{
+  margin-right: 10px;
+  font-size: 50px;
+  color: ${props=> props.colorWord === "correct"? "green" : props.colorWord ==="incorrect"? "red" : "black"}
+  }
+
+`
