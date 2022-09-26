@@ -32,9 +32,10 @@ export default function GuessAnswer(props) {
     }
   }
     return (
-        <GuessAnswerDiv>
+        <GuessAnswerDiv >
             <p> Já sei a palavra!</p>
-            <input
+            <input 
+                data-identifier='type-guess'
                 placeholder="Digite a palavra"
                 disabled={inputIsDisabled}
                 autoFocus
@@ -44,7 +45,7 @@ export default function GuessAnswer(props) {
                     e.key === "Enter" ? guessWord() : null
                 }
             />
-            <Guess onClick={guessWord}>
+            <Guess onClick={guessWord} data-identifier='guess-button'>
                 {" "}
                 Chutar{" "}
             </Guess>
@@ -57,13 +58,14 @@ const GuessAnswerDiv = styled.div `
   display: flex;
   justify-content: space-between;
   align-items:center;
-  width: 800px;
+  width: 700px;
   p{
     font-size: 20px;
   }
   input {
-    height:30px;
-    width: 300px;
+    height:40px;
+    width: 400px;
+    border-radius:5px;
   }
 `
 const Guess = styled.div `
@@ -71,12 +73,12 @@ const Guess = styled.div `
   align-items: center;
   justify-content: center;
   width: 100px;
-  height: 30px;
+  height: 40px;
   color: #3b74a9;
    background-color: #e1ecf4;
    border: 2px solid #3b74a9;
    border-radius: 5px;
    font-size: 20px;
-   font-weight: 900;
+   font-weight: 1000;
    cursor: pointer;
 `

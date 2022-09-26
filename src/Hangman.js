@@ -12,14 +12,14 @@ export default function Hangman(props) {
     setWord(choosenWord);
   }
   return (
-    <HangmanGame>
-      <img src={hangmanImages[incorrectLetters]} alt="Hangman Game" />
+    <HangmanGame > 
+      <img src={hangmanImages[incorrectLetters]} alt="Hangman Game" data-identifier='game-image'/>
       <WordDiv>
-        <ChooseButton onClick={drawWord}>
+        <ChooseButton onClick={drawWord} data-identifier='choose-word'>
 
           Escolher Palavra
         </ChooseButton>
-        <ChoosenWord colorWord= {colorWord}>
+        <ChoosenWord colorWord= {colorWord} data-identifier='word'>
           {word.map((w, index) => (
             <div key={index} >
               {selectedLetter.includes(replace(w))
@@ -27,7 +27,7 @@ export default function Hangman(props) {
                 : hiddenLetter}
             </div>
           ))}
-        </ChoosenWord>
+        </ChoosenWord >
       </WordDiv>
     </HangmanGame>
   );
@@ -73,6 +73,7 @@ const ChoosenWord= styled.div `
   div{
   margin-right: 10px;
   font-size: 50px;
+  font-weight:900;
   color: ${props=> props.colorWord === "correct"? "green" : props.colorWord ==="incorrect"? "red" : "black"}
   }
 

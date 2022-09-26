@@ -32,8 +32,8 @@ export default function Letters(props) {
   return (
    <>{ 
       selectedLetter.includes(alphabet[index])
-          ? (<LetterDisabled    onClick={() => selectLetter(index)}> {props.letter.toUpperCase()} </LetterDisabled>)
-          : (<LetterAbled  disabled = {buttonLetter} onClick={() => selectLetter(index)}> {props.letter.toUpperCase()} </LetterAbled>)
+          ? (<LetterDisabled   data-identifier='letter'onClick={() => selectLetter(index)} > {props.letter.toUpperCase()} </LetterDisabled>)
+          : (<LetterAbled  data-identifier='letter'disabled = {buttonLetter} onClick={() => selectLetter(index)}> {props.letter.toUpperCase()} </LetterAbled>)
     }</>
 
   )
